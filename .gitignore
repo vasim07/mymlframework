@@ -139,4 +139,6 @@ models/
 *.h5
 *.pkl
 *.pth
+*.sav
 .vscode/
+mlruns/

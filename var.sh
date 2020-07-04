@@ -8,9 +8,11 @@ export ML_TYPE=regression
 export MODEL=$1
 
 # celery -A src worker --loglevel=INFO
-# celery -A src worker --loglevel=DEBUG
+# flower -A src --port=5555
 
 # First install the module
 #python -m src.predict
 
 python /mnt/f/Vasim/PythonStuff/ml-framework/cdmlfw/call.py
+
+# Final - ./var.sh

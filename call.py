@@ -18,5 +18,5 @@ train_xgboost.delay(X_train, y_train)
 
 train_rf.delay(X_train, y_train)
 
-print("Working")
+print("Check Celery")
 

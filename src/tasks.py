@@ -11,6 +11,13 @@ from mlflow import log_params, log_metrics, log_artifact, experiments
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import ParameterGrid
+from sklearn.linear_model import LinearRegression, LogisticRegression
+
+
+# xgparams = os.environ.get("xgparams")
+# rf_params = os.environ.get("rf_params")
+ml_type = os.environ.get("ML_TYPE")
+print(ml_type)
 
 def log_regression_metrics(actual, pred):
     mse = mean_squared_error(actual, pred)
@@ -18,38 +25,72 @@ def log_regression_metrics(actual, pred):
     rsq = r2_score(actual, pred)
     return {"rmse" : rmse, "mse" : mse, "Rsq" : rsq}
 
+## XGBOOOST
+
 xgparams = {"learning_rate" : [0.01, 0.1, 0.3], "n_estimators" : [100, 500, 1000]}
     
 @app.task
 def train_xgboost(X_data, y_data, params = xgparams):
+    """
+    Run XGBoost model
+    """
     print("Starting xgboost")
     unpack_params = ParameterGrid(params)
-    #mlflow.xgboost.autolog()
 
     for i in unpack_params:
-        with mlflow.start_run():
+        with mlflow.start_run(run_name='Xgboost'):
             X_train = pd.read_json(X_data)
             y_train = pd.read_json(y_data, typ="series")
-            xgb_model = xgb.XGBRegressor(**i)
+            if ml_type == 0:
+                xgb_model = xgb.XGBRegressor(**i)
+            else:
+                xgb_model = xgb.XGBClassifier(**i)
+            #modelling.apply_async((xgb_model, X_train, y_train, i), serializer='pickle')
             xgb_model.fit(X_train, y_train)
             pred = xgb_model.predict(X_train)
-            log_metrics(log_regression_metrics(y_train, pred))    
+            if ml_type == 0 :
+                log_metrics(log_regression_metrics(y_train, pred))    
+            else:
+                pass
             log_params(i)
-            
+    print("XGBoost Completed!")
+
+
+## RANDOM FOREST
+
 rf_params = {"n_estimators":[100, 1000, 2000], "max_depth":[2,5,10]}    
 
 @app.task
 def train_rf(X_data, y_data, params=rf_params):
+    """
+    Run RandomForest
+    """
     print("Starting rf")
     unpack_params = ParameterGrid(params)
+    #rf = mlflow.set_experiment("rf")
 
     for i in unpack_params:
-        with mlflow.start_run():
+        with mlflow.start_run(run_name='RF'):
             X_train = pd.read_json(X_data)
             y_train = pd.read_json(y_data, typ="series")
             rf_model = RandomForestRegressor(**i)
+            # modelling.apply_async((rf_model, X_train, y_train, i), serializer='pickle')
             rf_model.fit(X_train, y_train)
             pred = rf_model.predict(X_train)
             log_metrics(log_regression_metrics(y_train, pred))
             log_params(i)
-        
+    print("RF Completed!")
+
+def linear_model(X_data, y_data):
+    """
+    Linear & Logistic Regression
+    """
+    print("Linear Model Starting!")
+    with mlflow.start_run(run_name='LM'):
+        x_train = pd.read_json(X_data)
+        y_train = pd.read_json(y_data, typ="series")
+        lm_model = LinearRegression()
+        lm_model.fit(x_train, y_train)
+        pred = lm_model.predict(x_train)
+        log_metrics(log_regression_metrics(y_train, pred))
+    print("Linear Model completed!")

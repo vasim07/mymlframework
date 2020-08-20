@@ -8,6 +8,7 @@ app = Celery('downloaderApp',
              broker='redis://localhost:6379/0', 
              include=['src.tasks'])
 
+# app.conf.update(CELERY_ACCEPT_CONTENT = ['pickle', 'json'])
 
 if __name__ == '__main__':
     app.start()

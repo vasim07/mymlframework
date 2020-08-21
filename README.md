@@ -1,10 +1,16 @@
 # ML Framework
 
-Install packages from requirements.txt
+Docker should be installed.
 
-open Ubuntu terminal and type `celery -A src worker --loglevel=DEBUG`
+Clone this git repository.
 
-Ensure you see train_xgboost and add in the task list
+`git clone https://github.com/vasim07/mymlframework`
 
-in var.sh file - change path at 4 places.
-On another terminal type `./var.sh`
+Run the following docker command in your console
+`docker run -it -v F:/filepath/input:/home/mlframework/input --publish 5000:5000 --publish 5555:5555 mlframe /bin/bash`
+
+Await till docker builds up the container
+
+In F:/filepath/input input your dataset with filename as `train.csv` and target feature as `target`.
+
+Inside container, run `./docker_run.sh`

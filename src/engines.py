@@ -1,4 +1,4 @@
-from .celery import app
+from celeryf import app
 import pandas as pd
 import numpy as np
 import xgboost as xgb
@@ -24,6 +24,10 @@ def log_regression_metrics(actual, pred):
     rmse = np.sqrt(mse)
     rsq = r2_score(actual, pred)
     return {"rmse" : rmse, "mse" : mse, "Rsq" : rsq}
+
+def generic_model(model_name, X_train, y_train, params = None):
+    "What if we want multiple models?"
+    pass
 
 ## XGBOOOST
 
@@ -80,6 +84,8 @@ def train_rf(X_data, y_data, params=rf_params):
             log_metrics(log_regression_metrics(y_train, pred))
             log_params(i)
     print("RF Completed!")
+
+## Linear Regression and Logistic Regression
 
 def linear_model(X_data, y_data):
     """

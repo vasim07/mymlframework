@@ -1,7 +1,7 @@
-export BASE_DIR=/mnt/f/Vasim/PythonStuff/ml-framework/cdmlfw/
+export BASE_DIR=/home/mlframework
 
-export TRAINING_DATA=/mnt/f/Vasim/PythonStuff/ml-framework/cdmlfw/input/nb_data.csv
-export TEST_DATA=/mnt/f/Vasim/PythonStuff/ml-framework/cdmlfw/input/nb_data.csv
+export TRAINING_DATA=/home/mlframework/input/nb_data.csv
+export TEST_DATA=/home/mlframework/input/nb_data.csv
 # 0 - regression or 1 - classification
 export ML_TYPE=0
 
@@ -14,7 +14,7 @@ rm -rf mlruns
 # First install the module
 # python -m src.predict
 
-python /mnt/f/Vasim/PythonStuff/ml-framework/cdmlfw/src/main.py
+python /home/mlframework/src/main.py
 
 # sudo service redis-server start
 # sudo /etc/init.d/celeryd start/stop/status <- manually start celery

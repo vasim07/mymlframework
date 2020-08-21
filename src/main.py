@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 # from .train.xgboost import train_xgbsoost
-from src.tasks import train_xgboost, train_rf
+from engines import train_xgboost, train_rf, linear_model
 
 base_dir = os.environ.get("BASE_DIR")
 dataset = os.environ.get("TRAINING_DATA")
@@ -17,6 +17,8 @@ y_train = pd.read_csv(dataset)["Target"].to_json()
 train_xgboost.apply_async((X_train, y_train))
 
 train_rf.delay(X_train, y_train)
+
+linear_model.delay(X_train, y_train)
 
 print("Check Celery")
 

@@ -1,0 +1,31 @@
+FROM continuumio/miniconda3
+LABEL maintainer="Vasim"
+LABEL version=0.1
+LABEL description="ML Framework try"
+
+RUN apt-get update && \
+      apt-get -y install sudo
+
+# TODO
+# RUN useradd -m docker && echo "vasim:vasim" | chpasswd && adduser docker sudo
+# RUN useradd -m docker && echo "vasim:vasim" | chpasswd && adduser celery sudo
+
+RUN mkdir mlframework
+WORKDIR /home/mlframework
+
+# ADD OR COPY
+ADD .* mlframework
+# VOLUME f:/Vasim/PythonStuff/ml-framework/cdmlfw/input mlframework/input
+# RUN rm -r input
+
+#RUN pip install --install-option="--prefix=/install" -r ./requirements.txt
+
+#RUN sudo service redis-server start
+
+# COPY f:/Vasim/PythonStuff/ml-framework/cdmlfw/celeryd /etc/defaults
+
+EXPOSE 5000:5000
+EXPOSE 5555:5555
+
+# USER docker
+CMD bin/bash

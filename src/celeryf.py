@@ -6,7 +6,7 @@ import xgboost as xgb
 app = Celery('downloaderApp',
              backend='redis://localhost:6379/1',
              broker='redis://localhost:6379/0', 
-             include=['src.tasks'])
+             include=['src.engines'])
 
 # app.conf.update(CELERY_ACCEPT_CONTENT = ['pickle', 'json'])
 

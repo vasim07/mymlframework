@@ -14,7 +14,7 @@ y_train = pd.read_csv(dataset)["Target"].to_json()
 
 # print(X_train)
 # print(y_train)
-train_xgboost.apply_async((X_train, y_train))
+train_xgboost.delay(X_train, y_train)
 
 train_rf.delay(X_train, y_train)
 

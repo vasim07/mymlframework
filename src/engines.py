@@ -17,7 +17,7 @@ from sklearn.linear_model import LinearRegression, LogisticRegression
 # xgparams = os.environ.get("xgparams")
 # rf_params = os.environ.get("rf_params")
 ml_type = os.environ.get("ML_TYPE")
-print(ml_type)
+# print(ml_type)
 
 def log_regression_metrics(actual, pred):
     mse = mean_squared_error(actual, pred)

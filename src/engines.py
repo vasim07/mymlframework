@@ -1,4 +1,4 @@
-from celeryf import app
+from src.celery import app
 import pandas as pd
 import numpy as np
 import xgboost as xgb
@@ -87,6 +87,7 @@ def train_rf(X_data, y_data, params=rf_params):
 
 ## Linear Regression and Logistic Regression
 
+@app.task
 def linear_model(X_data, y_data):
     """
     Linear & Logistic Regression

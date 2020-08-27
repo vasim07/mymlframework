@@ -14,7 +14,7 @@ rm -rf mlruns
 # First install the module
 # python -m src.predict
 
-python /mnt/f/Vasim/PythonStuff/ml-framework/cdmlfw/src/main.py
+python /mnt/f/Vasim/PythonStuff/ml-framework/cdmlfw/main.py
 
 # sudo service redis-server start
 # sudo /etc/init.d/celeryd start/stop/status <- manually start celery

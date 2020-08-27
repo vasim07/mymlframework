@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 # from .train.xgboost import train_xgbsoost
-from engines import train_xgboost, train_rf, linear_model
+from src.engines import train_xgboost, train_rf, linear_model
 
 base_dir = os.environ.get("BASE_DIR")
 dataset = os.environ.get("TRAINING_DATA")

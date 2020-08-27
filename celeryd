@@ -1,4 +1,4 @@
-CELERY_BIN="/home/vasim/miniconda3/envs/compframework/bin/celery"
+CELERY_BIN="/opt/conda/bin/celery"
 
 # App instance to use
 CELERY_APP="src"

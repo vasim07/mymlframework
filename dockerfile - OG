@@ -32,25 +32,23 @@ ADD . .
 # RUN rm -r input
 RUN rm var.sh
 
+RUN pip install --no-cache-dir -r ./requirements.txt
+
 # Need refresh
 VOLUME F:/Vasim/PythonStuff/ml-framework/cdmlfw/input:mlframework/input
 
 COPY ./celeryd01 /etc/init.d/celeryd
 RUN chmod 755 /etc/init.d/celeryd
-RUN chmod 640 /etc/init.d/celeryd # Requried?
 RUN chown root:root /etc/init.d/celeryd
-
 
 COPY ./celeryd /etc/default/celeryd
 COPY ./redis.conf /etc/redis/redis.conf
 
 RUN service redis-server start
-# CMD /etc/init.d/celeryd start #Set celery through cmd line in docker compose
+RUN /etc/init.d/celeryd start
 
-RUN pip install --no-cache-dir -r ./requirements.txt
-
-EXPOSE 5000:5000 
-EXPOSE 5555:5555 # Flower
+EXPOSE 5000:5000
+EXPOSE 5555:5555
 
 # USER docker
-CMD mlflow ui
+CMD bin/bash
